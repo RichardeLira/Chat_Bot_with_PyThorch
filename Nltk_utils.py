@@ -4,7 +4,7 @@ import nltk
 nltk.download("punkt") 
 from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
-nltk.download('stopwords')
+# nltk.download('stopwords')
 import re
 import string
 import numpy as np 

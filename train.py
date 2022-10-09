@@ -53,7 +53,7 @@ y_train = np.array(y_train)
 
 
 class ChatDataset(Dataset):
-    def __init__(self) -> None:
+    def __init__(self):
         self.n_samples = len(X_train)
         self.x_data = X_train
         self.y_data = y_train
@@ -77,7 +77,7 @@ num_epochs = 1000
 
 
 dataset = ChatDataset()
-train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True,num_workers=2)
+train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True,num_workers=0)
 
 # Check if the GPU is avaible 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -86,7 +86,7 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 
 # loss and optimizer 
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, )
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 for epoch in range(num_epochs):
     for(words, labels) in train_loader:
@@ -94,7 +94,7 @@ for epoch in range(num_epochs):
         labels = labels.to(device)
 
         # forward
-        outputs = model(words)
+        outputs = model.forward(words)
         loss = criterion(outputs, labels)
         # Backward and optimezer setp
         optimizer.zero_grad()
